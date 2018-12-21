@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:edge
 
 LABEL maintainer="gokhan@webgazer.io"
 
