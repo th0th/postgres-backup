@@ -48,7 +48,7 @@ pg_dump \
     --port="$POSTGRES_PORT" \
     --username="$POSTGRES_USER" \
     --dbname="$POSTGRES_DB" \
-	--format=c \
+    --format=c \
     | gzip > "$FILENAME"
 
 echo "Done."
