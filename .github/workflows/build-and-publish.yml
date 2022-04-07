@@ -28,7 +28,7 @@ jobs:
           images: th0th/postgres-s3
 
       - name: Build and push Docker image
-        uses: docker/build-push-action
+        uses: docker/build-push-action@v2
         with:
           context: .
           push: true
