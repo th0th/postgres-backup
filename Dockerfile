@@ -1,11 +1,9 @@
-FROM alpine:edge
+FROM alpine:3
 
-LABEL maintainer="gokhan@webgazer.io"
+WORKDIR /root
 
 RUN apk update && \
-    apk add bash python3 postgresql-client nodejs npm
-
-RUN pip3 install s3cmd
+    apk add bash postgresql-client rclone
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
