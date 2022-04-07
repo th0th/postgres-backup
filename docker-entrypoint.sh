@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eox pipefail
+set -eo pipefail
 
 POSTGRES_HOST="${POSTGRES_HOST:-postgres}"
 POSTGRES_PORT="${POSTGRES_PORT:-"5432"}"
@@ -12,7 +12,6 @@ export PGPASSWORD="${POSTGRES_PASSWORD}"
 
 DATETIME="$(date -u +%Y%m%d-%H%M%S)"
 FILENAME="${POSTGRES_DB}-${DATETIME}.gz"
-#FILENAME="$POSTGRES_DB"-"$DATETIME".gz
 
 echo "Dumping the database..."
 
