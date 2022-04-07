@@ -30,6 +30,6 @@ echo "Uploading to S3..."
 rclone copyto \
   --s3-no-check-bucket \
   "${FILENAME}" \
-  ":s3,access_key_id=${AWS_ACCESS_KEY_ID},provider=AWS,region=${AWS_REGION},secret_access_key=${AWS_SECRET_ACCESS_KEY}:${AWS_ENDPOINT}/${FILENAME}"
+  ":s3,access_key_id=${AWS_ACCESS_KEY_ID},provider=AWS,region=${AWS_REGION},secret_access_key=${AWS_SECRET_ACCESS_KEY}:${AWS_S3_ENDPOINT}/${FILENAME}"
 
 echo "Done."
