@@ -31,6 +31,6 @@ echo "Dumping the database... Done."
 echo "Uploading to S3..."
 rclone copyto \
   --s3-no-check-bucket \
-  "${BACKUP_FILE_NAME}" \
+  "./${BACKUP_FILE_NAME}" \
   ":s3,access_key_id=${AWS_ACCESS_KEY_ID},region=${AWS_REGION},secret_access_key=${AWS_SECRET_ACCESS_KEY},storage_class=GLACIER:${AWS_S3_ENDPOINT}/${BACKUP_FILE_NAME}"
 echo "Uploading to S3... Done."
