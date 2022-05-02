@@ -2,6 +2,8 @@
 
 set -eo pipefail
 
+SECONDS=0
+
 # required environment variables
 : "${AWS_ACCESS_KEY_ID:?Please set the environment variable.}"
 : "${AWS_REGION:?Please set the environment variable.}"
@@ -34,3 +36,7 @@ rclone copyto \
   "./${BACKUP_FILE_NAME}" \
   ":s3,access_key_id=${AWS_ACCESS_KEY_ID},region=${AWS_REGION},secret_access_key=${AWS_SECRET_ACCESS_KEY},storage_class=GLACIER:${AWS_S3_ENDPOINT}/${BACKUP_FILE_NAME}"
 echo "Uploading to S3... Done."
+
+if [ -n "${WEBGAZER_PULSE_URL}" ]; then
+  curl "${WEBGAZER_PULSE_URL}?seconds=${SECONDS}"
+fi
