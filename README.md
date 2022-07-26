@@ -14,11 +14,11 @@
 | AWS_REGION            | ✔        |                | Region for the AWS bucket                                               |
 | AWS_S3_ENDPOINT       | ✔        |                | AWS S3 endpoint with bucket and path (e.g. "my-bucket/postgres-backup") |
 | AWS_SECRET_ACCESS_KEY | ✔        |                | Secret access key for the AWS account                                   |
+| POSTGRES_DB           | ✔        |                | Postgres server database                                                |
 | POSTGRES_HOST         |          | postgres       | Postgres server host                                                    |
 | POSTGRES_PASSWORD     | ✔        |                | Postgres server password                                                |
 | POSTGRES_PORT         |          | 5432           | Postgres server port                                                    |
 | POSTGRES_USER         |          | postgres       | Postgres server user                                                    |
-| POSTGRES_DB           | ✔        |                | Postgres server database                                                |
 | POSTGRES_VERSION      |          | 14             | Postgres server version (12, 13 or 14)                                  |
 | WEBGAZER_PULSE_URL    |          |                | [WebGazer Pulse](https://www.webgazer.io/pulse) URL                     |
 
