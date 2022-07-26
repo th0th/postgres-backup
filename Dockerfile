@@ -3,7 +3,7 @@ FROM alpine:3
 WORKDIR /root
 
 RUN apk update && \
-    apk add bash curl postgresql-client rclone
+    apk add bash curl postgresql12-client postgresql13-client postgresql14-client rclone
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh

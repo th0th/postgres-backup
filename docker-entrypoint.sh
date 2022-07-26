@@ -16,12 +16,21 @@ SECONDS=0
 POSTGRES_HOST="${POSTGRES_HOST:-postgres}"
 POSTGRES_PORT="${POSTGRES_PORT:-5432}"
 POSTGRES_USER="${POSTGRES_USER:-postgres}"
+POSTGRES_VERSION="${POSTGRES_VERSION:-14}"
+
+# validate environment variables
+POSTGRES_VERSIONS=(12 13 14)
+
+if [[ ! " ${POSTGRES_VERSIONS[*]} " =~ " ${POSTGRES_VERSION} " ]]; then
+  echo "error: POSTGRES_VERSION can be one of these: ${POSTGRES_VERSIONS[*]}"
+  exit 1
+fi
 
 # logic starts here
 BACKUP_FILE_NAME=$(date +"${POSTGRES_DB}-%F_%T")
 
 echo "Dumping the database..."
-PGPASSWORD="${POSTGRES_PASSWORD}" pg_dump \
+PGPASSWORD="${POSTGRES_PASSWORD}" "/usr/libexec/postgresql${POSTGRES_VERSION}/pg_dump" \
     --host="${POSTGRES_HOST}" \
     --port="${POSTGRES_PORT}" \
     --username="${POSTGRES_USER}" \

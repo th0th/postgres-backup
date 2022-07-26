@@ -10,16 +10,16 @@
 
 | Variable              | Required | Default value  | Description                                                             |
 |-----------------------|:--------:|----------------|-------------------------------------------------------------------------|
-| AWS_ACCESS_KEY_ID     |    ✅     |                | Access key id for the AWS account                                       |
-| AWS_REGION            |    ✅     |                | Region for the AWS bucket                                               |
-| AWS_S3_ENDPOINT       |    ✅     |                | AWS S3 endpoint with bucket and path (e.g. "my-bucket/postgres-backup") |
-| AWS_SECRET_ACCESS_KEY |    ✅     |                | Secret access key for the AWS account                                   |
+| AWS_ACCESS_KEY_ID     | ✔        |                | Access key id for the AWS account                                       |
+| AWS_REGION            | ✔        |                | Region for the AWS bucket                                               |
+| AWS_S3_ENDPOINT       | ✔        |                | AWS S3 endpoint with bucket and path (e.g. "my-bucket/postgres-backup") |
+| AWS_SECRET_ACCESS_KEY | ✔        |                | Secret access key for the AWS account                                   |
 | POSTGRES_HOST         |          | postgres       | Postgres server host                                                    |
-| POSTGRES_PASSWORD     |    ✅     |                | Postgres server password                                                |
+| POSTGRES_PASSWORD     | ✔        |                | Postgres server password                                                |
 | POSTGRES_PORT         |          | 5432           | Postgres server port                                                    |
 | POSTGRES_USER         |          | postgres       | Postgres server user                                                    |
-| POSTGRES_DB           |    ✅     |                | Postgres server database                                                |
-| POSTGRES_DB           |    ✅     |                | Postgres server database                                                |
+| POSTGRES_DB           | ✔        |                | Postgres server database                                                |
+| POSTGRES_VERSION      |          | 14             | Postgres server version (12, 13 or 14)                                  |
 | WEBGAZER_PULSE_URL    |          |                | [WebGazer Pulse](https://www.webgazer.io/pulse) URL                     |
 
 ### Running
@@ -30,6 +30,7 @@
         -e POSTGRES_USER=<postgres_user[postgres]> \
         -e POSTGRES_PASSWORD=<postgres_password> \
         -e POSTGRES_DB=<database> \
+        -e POSTGRES_VERSION=<postgres_version[14]> \
         -e AWS_ACCESS_KEY_ID=<aws_access_key_id> \
         -e AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
         -e AWS_S3_ENDPOINT=<aws_s3_endpoint> \
@@ -43,6 +44,7 @@
         -e POSTGRES_USER=postgres_user \
         -e POSTGRES_PASSWORD=postgres_password \
         -e POSTGRES_DB=database \
+        -e POSTGRES_VERSION=14 \
         -e AWS_ACCESS_KEY_ID=g9XqNnqKmUk6xqwkStkN \
         -e AWS_SECRET_ACCESS_KEY=GLBZ8mQf27UL57YHbkLhXWtfJWVwtUBbQup6mFzw \
         -e AWS_S3_ENDPOINT=my-bucket/postgres-backup \
