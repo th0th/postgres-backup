@@ -36,7 +36,7 @@ PGPASSWORD="${POSTGRES_PASSWORD}" "/usr/libexec/postgresql${POSTGRES_VERSION}/pg
     --username="${POSTGRES_USER}" \
     --dbname="${POSTGRES_DB}" \
     --format=c \
-    | gzip > "${BACKUP_FILE_NAME}"
+    | pigz --fast > "${BACKUP_FILE_NAME}.gz"
 echo "Dumping the database... Done."
 
 echo "Uploading to S3..."
