@@ -27,7 +27,7 @@ if [[ ! " ${POSTGRES_VERSIONS[*]} " =~ " ${POSTGRES_VERSION} " ]]; then
 fi
 
 # logic starts here
-BACKUP_FILE_NAME=$(date +"${POSTGRES_DB}-%F_%T")
+BACKUP_FILE_NAME=$(date +"${POSTGRES_DB}-%F_%T.gz")
 
 echo "Dumping the database..."
 PGPASSWORD="${POSTGRES_PASSWORD}" "/usr/libexec/postgresql${POSTGRES_VERSION}/pg_dump" \
@@ -36,7 +36,7 @@ PGPASSWORD="${POSTGRES_PASSWORD}" "/usr/libexec/postgresql${POSTGRES_VERSION}/pg
     --username="${POSTGRES_USER}" \
     --dbname="${POSTGRES_DB}" \
     --format=c \
-    | pigz --fast > "${BACKUP_FILE_NAME}.gz"
+    | pigz --fast > "${BACKUP_FILE_NAME}"
 echo "Dumping the database... Done."
 
 echo "Uploading to S3..."
