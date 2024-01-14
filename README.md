@@ -20,7 +20,7 @@
 | POSTGRES_PASSWORD     |    ✔     |               | Postgres server password                                                                                                      |
 | POSTGRES_PORT         |          | 5432          | Postgres server port                                                                                                          |
 | POSTGRES_USER         |          | postgres      | Postgres server user                                                                                                          |
-| POSTGRES_VERSION      |          | 15            | Postgres server version (12, 13, 14 or 15)                                                                                    |
+| POSTGRES_VERSION      |          | 16            | Postgres server version (13, 14, 15 or 16)                                                                                    |
 | WEBGAZER_PULSE_URL    |          |               | [WebGazer Pulse](https://www.webgazer.io/pulse) URL                                                                           |
 
 ### Running
