@@ -20,7 +20,7 @@
 | POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                                                      |
 | POSTGRES_PORT          |          | 5432          | Postgres server port                                                                                                          |
 | POSTGRES_USER          |          | postgres      | Postgres server user                                                                                                          |
-| POSTGRES_VERSION       |          | 16            | Postgres server version (13, 14, 15 or 16)                                                                                    |
+| POSTGRES_VERSION       |          | 16            | Postgres server version (14, 15 or 16)                                                                                        |
 | WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL                                        |
 
 ### Running

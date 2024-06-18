@@ -20,7 +20,7 @@ POSTGRES_USER="${POSTGRES_USER:-postgres}"
 POSTGRES_VERSION="${POSTGRES_VERSION:-16}"
 
 # validate environment variables
-POSTGRES_VERSIONS=(13 14 15 16)
+POSTGRES_VERSIONS=(14 15 16)
 
 if [[ ! " ${POSTGRES_VERSIONS[*]} " =~ " ${POSTGRES_VERSION} " ]]; then
   echo "error: POSTGRES_VERSION can be one of these: ${POSTGRES_VERSIONS[*]}"
