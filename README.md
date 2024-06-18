@@ -2,26 +2,26 @@
 
 * Takes the dump of the Postgres database
 * Uploads it to AWS' object storage service S3
-* Reports to WebGazer Pulse (optional)
+* Reports to [WebGazer](https://www.webgazer.io) (optional)
 
 ## Usage
 
 ### Environment variables
 
-| Variable              | Required | Default value | Description                                                                                                                   |
-|-----------------------|:--------:|---------------|-------------------------------------------------------------------------------------------------------------------------------|
-| AWS_ACCESS_KEY_ID     |    ✔     |               | Access key id for the AWS account                                                                                             |
-| AWS_REGION            |    ✔     |               | Region for the AWS bucket                                                                                                     |
-| AWS_S3_ENDPOINT       |    ✔     |               | AWS S3 endpoint with bucket and path (e.g. "my-bucket/postgres-backup")                                                       |
-| AWS_S3_STORAGE_CLASS  |          | STANDARD_IA   | AWS S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options. |
-| AWS_SECRET_ACCESS_KEY |    ✔     |               | Secret access key for the AWS account                                                                                         |
-| POSTGRES_DB           |    ✔     |               | Postgres server database                                                                                                      |
-| POSTGRES_HOST         |          | postgres      | Postgres server host                                                                                                          |
-| POSTGRES_PASSWORD     |    ✔     |               | Postgres server password                                                                                                      |
-| POSTGRES_PORT         |          | 5432          | Postgres server port                                                                                                          |
-| POSTGRES_USER         |          | postgres      | Postgres server user                                                                                                          |
-| POSTGRES_VERSION      |          | 16            | Postgres server version (13, 14, 15 or 16)                                                                                    |
-| WEBGAZER_PULSE_URL    |          |               | [WebGazer Pulse](https://www.webgazer.io/pulse) URL                                                                           |
+| Variable               | Required | Default value | Description                                                                                                                   |
+|------------------------|:--------:|---------------|-------------------------------------------------------------------------------------------------------------------------------|
+| AWS_ACCESS_KEY_ID      |    ✔     |               | Access key id for the AWS account                                                                                             |
+| AWS_REGION             |    ✔     |               | Region for the AWS bucket                                                                                                     |
+| AWS_S3_ENDPOINT        |    ✔     |               | AWS S3 endpoint with bucket and path (e.g. "my-bucket/postgres-backup")                                                       |
+| AWS_S3_STORAGE_CLASS   |          | STANDARD_IA   | AWS S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options. |
+| AWS_SECRET_ACCESS_KEY  |    ✔     |               | Secret access key for the AWS account                                                                                         |
+| POSTGRES_DB            |    ✔     |               | Postgres server database                                                                                                      |
+| POSTGRES_HOST          |          | postgres      | Postgres server host                                                                                                          |
+| POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                                                      |
+| POSTGRES_PORT          |          | 5432          | Postgres server port                                                                                                          |
+| POSTGRES_USER          |          | postgres      | Postgres server user                                                                                                          |
+| POSTGRES_VERSION       |          | 16            | Postgres server version (13, 14, 15 or 16)                                                                                    |
+| WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL                                        |
 
 ### Running
 
@@ -37,7 +37,7 @@
         -e POSTGRES_PORT=<postgres_port[5432]> \
         -e POSTGRES_USER=<postgres_user[postgres]> \
         -e POSTGRES_VERSION=<postgres_version[15]> \
-        -e WEBGAZER_PULSE_URL=<webgazer_pulse_url>
+        -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url>
 
 ### Example
 
@@ -53,7 +53,7 @@
         -e POSTGRES_PORT=5432 \
         -e POSTGRES_USER=postgres_user \
         -e POSTGRES_VERSION=15 \
-        -e WEBGAZER_PULSE_URL=https://pulse.webgazer.io/1-8f713c75d659
+        -e WEBGAZER_HEARTBEAT_URL=https://heartbeat.webgazer.io/1-8f713c75d659
 
 ## Shameless plug
 
