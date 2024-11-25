@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -eo pipefail
 
 SECONDS=0
@@ -17,10 +16,10 @@ AWS_S3_STORAGE_CLASS="${AWS_S3_STORAGE_CLASS:-STANDARD_IA}"
 POSTGRES_HOST="${POSTGRES_HOST:-postgres}"
 POSTGRES_PORT="${POSTGRES_PORT:-5432}"
 POSTGRES_USER="${POSTGRES_USER:-postgres}"
-POSTGRES_VERSION="${POSTGRES_VERSION:-16}"
+POSTGRES_VERSION="${POSTGRES_VERSION:-17}"
 
 # validate environment variables
-POSTGRES_VERSIONS=(14 15 16)
+POSTGRES_VERSIONS=(15 16 17)
 
 if [[ ! " ${POSTGRES_VERSIONS[*]} " =~ " ${POSTGRES_VERSION} " ]]; then
   echo "error: POSTGRES_VERSION can be one of these: ${POSTGRES_VERSIONS[*]}"
@@ -32,12 +31,12 @@ BACKUP_FILE_NAME=$(date +"${POSTGRES_DB}-%F_%T.gz")
 
 echo "Dumping the database..."
 PGPASSWORD="${POSTGRES_PASSWORD}" "/usr/libexec/postgresql${POSTGRES_VERSION}/pg_dump" \
-    --host="${POSTGRES_HOST}" \
-    --port="${POSTGRES_PORT}" \
-    --username="${POSTGRES_USER}" \
-    --dbname="${POSTGRES_DB}" \
-    --format=c \
-    | pigz --fast > "${BACKUP_FILE_NAME}"
+  --host="${POSTGRES_HOST}" \
+  --port="${POSTGRES_PORT}" \
+  --username="${POSTGRES_USER}" \
+  --dbname="${POSTGRES_DB}" \
+  --format=c \
+  | pigz --fast > "${BACKUP_FILE_NAME}"
 echo "Dumping the database... Done."
 
 echo "Uploading to S3..."

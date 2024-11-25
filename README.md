@@ -20,40 +20,46 @@
 | POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                                                      |
 | POSTGRES_PORT          |          | 5432          | Postgres server port                                                                                                          |
 | POSTGRES_USER          |          | postgres      | Postgres server user                                                                                                          |
-| POSTGRES_VERSION       |          | 16            | Postgres server version (14, 15 or 16)                                                                                        |
+| POSTGRES_VERSION       |          | 17            | Postgres server version (15, 16 or 17)                                                                                        |
 | WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL                                        |
 
 ### Running
 
-    $ docker run th0th/postgres-s3-backup \
-        -e AWS_ACCESS_KEY_ID=<aws_access_key_id> \
-        -e AWS_REGION=<aws_region> \
-        -e AWS_S3_ENDPOINT=<aws_s3_endpoint> \
-        -e AWS_S3_STORAGE_CLASS=<aws_s3_storage_class[STANDARD_IA]> \
-        -e AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
-        -e POSTGRES_DB=<database> \
-        -e POSTGRES_HOST=<postgres_hostname[postgres]> \
-        -e POSTGRES_PASSWORD=<postgres_password> \
-        -e POSTGRES_PORT=<postgres_port[5432]> \
-        -e POSTGRES_USER=<postgres_user[postgres]> \
-        -e POSTGRES_VERSION=<postgres_version[15]> \
-        -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url>
+```shell
+$ docker run \
+  -e AWS_ACCESS_KEY_ID=<aws_access_key_id> \
+  -e AWS_REGION=<aws_region> \
+  -e AWS_S3_ENDPOINT=<aws_s3_endpoint> \
+  -e AWS_S3_STORAGE_CLASS=<aws_s3_storage_class[STANDARD_IA]> \
+  -e AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
+  -e POSTGRES_DB=<database> \
+  -e POSTGRES_HOST=<postgres_hostname[postgres]> \
+  -e POSTGRES_PASSWORD=<postgres_password> \
+  -e POSTGRES_PORT=<postgres_port[5432]> \
+  -e POSTGRES_USER=<postgres_user[postgres]> \
+  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
+  th0th/postgres-s3-backup
+```
 
 ### Example
 
-    $ docker run th0th/postgres-s3-backup \
-        -e AWS_ACCESS_KEY_ID=g9XqNnqKmUk6xqwkStkN \
-        -e AWS_REGION=eu-west-1 \
-        -e AWS_S3_ENDPOINT=my-bucket/postgres-backup \
-        -e AWS_S3_STORAGE_CLASS=GLACIER \
-        -e AWS_SECRET_ACCESS_KEY=GLBZ8mQf27UL57YHbkLhXWtfJWVwtUBbQup6mFzw \
-        -e POSTGRES_DB=database \
-        -e POSTGRES_HOST=postgres \
-        -e POSTGRES_PASSWORD=postgres_password \
-        -e POSTGRES_PORT=5432 \
-        -e POSTGRES_USER=postgres_user \
-        -e POSTGRES_VERSION=15 \
-        -e WEBGAZER_HEARTBEAT_URL=https://heartbeat.webgazer.io/1-8f713c75d659
+```shell
+$ docker run \
+  -e AWS_ACCESS_KEY_ID=g9XqNnqKmUk6xqwkStkN \
+  -e AWS_REGION=eu-west-1 \
+  -e AWS_S3_ENDPOINT=my-bucket/postgres-backup \
+  -e AWS_S3_STORAGE_CLASS=GLACIER \
+  -e AWS_SECRET_ACCESS_KEY=GLBZ8mQf27UL57YHbkLhXWtfJWVwtUBbQup6mFzw \
+  -e POSTGRES_DB=database \
+  -e POSTGRES_HOST=postgres \
+  -e POSTGRES_PASSWORD=postgres_password \
+  -e POSTGRES_PORT=5432 \
+  -e POSTGRES_USER=postgres_user \
+  -e POSTGRES_VERSION=17 \
+  -e WEBGAZER_HEARTBEAT_URL=https://heartbeat.webgazer.io/1-8f713c75d659 \
+  th0th/postgres-s3-backup
+```
 
 ## Shameless plug
 
