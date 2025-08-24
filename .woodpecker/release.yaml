@@ -1,0 +1,14 @@
+steps:
+  - image: woodpeckerci/plugin-docker-buildx
+    name: build-and-push
+    settings:
+      auto_tag: true
+      password:
+        from_secret: FORGEJO_TOKEN
+      platforms: linux/amd64,linux/arm64
+      registry: code.unius.sh
+      repo: code.unius.sh/unius/postgres-backup
+      username:
+        from_secret: FORGEJO_USER
+when:
+  - event: tag

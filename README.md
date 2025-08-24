@@ -1,37 +1,56 @@
-`postgres-s3-backup` is a Postgres backup helper that:
+`postgres-backup` is a Postgres backup helper that:
 
 * Takes the dump of the Postgres database
-* Uploads it to AWS' object storage service S3
+* Uploads it to either AWS S3 or SFTP server
 * Reports to [WebGazer](https://www.webgazer.io) (optional)
 
 ## Usage
 
 ### Environment variables
 
+| Variable               | Required | Default value | Description                                                                                   |
+|------------------------|:--------:|---------------|-----------------------------------------------------------------------------------------------|
+| DESTINATION_KIND       |    ✔     |               | Destination type: `s3` or `sftp`                                                              |
+| DESTINATION_PATH       |    ✔     |               | Destination path (e.g. "postgres-backup" for S3 bucket path or "/backups" for SFTP directory) |
+| POSTGRES_DB            |    ✔     |               | Postgres server database                                                                      |
+| POSTGRES_HOST          |          | postgres      | Postgres server host                                                                          |
+| POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                      |
+| POSTGRES_PORT          |          | 5432          | Postgres server port                                                                          |
+| POSTGRES_USER          |          | postgres      | Postgres server user                                                                          |
+| POSTGRES_VERSION       |          | 17            | Postgres server version (15, 16 or 17)                                                        |
+| WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL        |
+
+#### S3-specific variables (required when DESTINATION_KIND=s3)
+
 | Variable               | Required | Default value | Description                                                                                                                   |
 |------------------------|:--------:|---------------|-------------------------------------------------------------------------------------------------------------------------------|
-| AWS_ACCESS_KEY_ID      |    ✔     |               | Access key id for the AWS account                                                                                             |
-| AWS_REGION             |    ✔     |               | Region for the AWS bucket                                                                                                     |
-| AWS_S3_ENDPOINT        |    ✔     |               | AWS S3 endpoint with bucket and path (e.g. "my-bucket/postgres-backup")                                                       |
-| AWS_S3_STORAGE_CLASS   |          | STANDARD_IA   | AWS S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options. |
-| AWS_SECRET_ACCESS_KEY  |    ✔     |               | Secret access key for the AWS account                                                                                         |
-| POSTGRES_DB            |    ✔     |               | Postgres server database                                                                                                      |
-| POSTGRES_HOST          |          | postgres      | Postgres server host                                                                                                          |
-| POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                                                      |
-| POSTGRES_PORT          |          | 5432          | Postgres server port                                                                                                          |
-| POSTGRES_USER          |          | postgres      | Postgres server user                                                                                                          |
-| POSTGRES_VERSION       |          | 17            | Postgres server version (15, 16 or 17)                                                                                        |
-| WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL                                        |
+| S3_ACCESS_KEY_ID       |    ✔     |               | Access key id for the S3-compatible storage                                                                                   |
+| S3_REGION              |    ✔     |               | Region for the S3 bucket                                                                                                      |
+| S3_SECRET_ACCESS_KEY   |    ✔     |               | Secret access key for the S3-compatible storage                                                                               |
+| S3_PROVIDER            |          | AWS           | S3 provider (AWS, MinIO, etc.)                                                                                                |
+| S3_STORAGE_CLASS       |          | STANDARD_IA   | S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options)     |
+
+#### SFTP-specific variables (required when DESTINATION_KIND=sftp)
+
+| Variable               | Required | Default value | Description                                                                                                                   |
+|------------------------|:--------:|---------------|-------------------------------------------------------------------------------------------------------------------------------|
+| SFTP_HOST              |    ✔     |               | SFTP server hostname                                                                                                          |
+| SFTP_PASSWORD          |    ✔     |               | SFTP server password                                                                                                          |
+| SFTP_USER              |    ✔     |               | SFTP server username                                                                                                          |
+| SFTP_PORT              |          | 22            | SFTP server port                                                                                                              |
 
 ### Running
 
+#### S3 Backup Example
+
 ```shell
 $ docker run \
-  -e AWS_ACCESS_KEY_ID=<aws_access_key_id> \
-  -e AWS_REGION=<aws_region> \
-  -e AWS_S3_ENDPOINT=<aws_s3_endpoint> \
-  -e AWS_S3_STORAGE_CLASS=<aws_s3_storage_class[STANDARD_IA]> \
-  -e AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
+  -e DESTINATION_KIND=s3 \
+  -e DESTINATION_PATH=postgres-backup \
+  -e S3_ACCESS_KEY_ID=<s3_access_key_id> \
+  -e S3_REGION=<s3_region> \
+  -e S3_SECRET_ACCESS_KEY=<s3_secret_access_key> \
+  -e S3_STORAGE_CLASS=<s3_storage_class[STANDARD_IA]> \
   -e POSTGRES_DB=<database> \
   -e POSTGRES_HOST=<postgres_hostname[postgres]> \
   -e POSTGRES_PASSWORD=<postgres_password> \
@@ -39,26 +58,27 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[17]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  th0th/postgres-s3-backup
+  th0th/postgres-backup
 ```
 
-### Example
+#### SFTP Backup Example
 
 ```shell
 $ docker run \
-  -e AWS_ACCESS_KEY_ID=g9XqNnqKmUk6xqwkStkN \
-  -e AWS_REGION=eu-west-1 \
-  -e AWS_S3_ENDPOINT=my-bucket/postgres-backup \
-  -e AWS_S3_STORAGE_CLASS=GLACIER \
-  -e AWS_SECRET_ACCESS_KEY=GLBZ8mQf27UL57YHbkLhXWtfJWVwtUBbQup6mFzw \
-  -e POSTGRES_DB=database \
-  -e POSTGRES_HOST=postgres \
-  -e POSTGRES_PASSWORD=postgres_password \
-  -e POSTGRES_PORT=5432 \
-  -e POSTGRES_USER=postgres_user \
-  -e POSTGRES_VERSION=17 \
-  -e WEBGAZER_HEARTBEAT_URL=https://heartbeat.webgazer.io/1-8f713c75d659 \
-  th0th/postgres-s3-backup
+  -e DESTINATION_KIND=sftp \
+  -e DESTINATION_PATH=/backups \
+  -e SFTP_HOST=<sftp_host> \
+  -e SFTP_PASSWORD=<sftp_password> \
+  -e SFTP_USER=<sftp_user> \
+  -e SFTP_PORT=<sftp_port[22]> \
+  -e POSTGRES_DB=<database> \
+  -e POSTGRES_HOST=<postgres_hostname[postgres]> \
+  -e POSTGRES_PASSWORD=<postgres_password> \
+  -e POSTGRES_PORT=<postgres_port[5432]> \
+  -e POSTGRES_USER=<postgres_user[postgres]> \
+  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
+  th0th/postgres-backup
 ```
 
 ## Shameless plug
