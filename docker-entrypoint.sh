@@ -34,9 +34,20 @@ fi
 # destination: sftp
 if [[ "${DESTINATION_KIND}" == "sftp" ]]; then
   : "${SFTP_HOST:?Please set the environment variable.}"
-  : "${SFTP_PASSWORD:?Please set the environment variable.}"
   : "${SFTP_USER:?Please set the environment variable.}"
   SFTP_PORT="${SFTP_PORT:-22}"
+  
+  # Check if either password or private key is provided
+  if [[ -z "${SFTP_PASSWORD}" && -z "${SFTP_PRIVATE_KEY}" ]]; then
+    echo "error: Either SFTP_PASSWORD or SFTP_PRIVATE_KEY must be set for SFTP authentication"
+    exit 1
+  fi
+  
+  # Check that both are not provided
+  if [[ -n "${SFTP_PASSWORD}" && -n "${SFTP_PRIVATE_KEY}" ]]; then
+    echo "error: Only one of SFTP_PASSWORD or SFTP_PRIVATE_KEY should be set, not both"
+    exit 1
+  fi
 fi
 
 # logic starts here
@@ -67,19 +78,31 @@ if [[ "${DESTINATION_KIND}" == "s3" ]]; then
   UPLOAD_CMD+="provider=AWS,"
   UPLOAD_CMD+="region=${S3_REGION},"
   UPLOAD_CMD+="secret_access_key=${S3_SECRET_ACCESS_KEY},"
-  UPLOAD_CMD+="storage_class=${AWS_S3_STORAGE_CLASS}"
-  UPLOAD_CMD+=":${S3_ENDPOINT}/${BACKUP_FILE_NAME}"
+  UPLOAD_CMD+="storage_class=${S3_STORAGE_CLASS}"
+  UPLOAD_CMD+=":${DESTINATION_PATH}/${BACKUP_FILE_NAME}"
 elif [[ "${DESTINATION_KIND}" == "sftp" ]]; then
   UPLOAD_CMD+=":sftp,host=${SFTP_HOST},"
-  UPLOAD_CMD+="pass=${SFTP_PASSWORD},"
+  if [[ -n "${SFTP_PASSWORD}" ]]; then
+    # rclone requires passwords to be obscured using its own obscure command
+    SFTP_PASSWORD_OBSCURED=$(echo "${SFTP_PASSWORD}" | rclone obscure -)
+    UPLOAD_CMD+="pass=${SFTP_PASSWORD_OBSCURED},"
+  elif [[ -n "${SFTP_PRIVATE_KEY}" ]]; then
+    UPLOAD_CMD+="key_file=/tmp/sftp_private_key,"
+  fi
   UPLOAD_CMD+="port=${SFTP_PORT},"
   UPLOAD_CMD+="user=${SFTP_USER}"
+  UPLOAD_CMD+=":${DESTINATION_PATH}/${BACKUP_FILE_NAME}"
 fi
-UPLOAD_CMD+=":${DESTINATION_PATH}${BACKUP_FILE_NAME}"
 UPLOAD_CMD+="\""
 
 # let's go
 SECONDS=0
+
+# create private key file if SFTP_PRIVATE_KEY is provided
+if [[ "${DESTINATION_KIND}" == "sftp" && -n "${SFTP_PRIVATE_KEY}" ]]; then
+  echo "${SFTP_PRIVATE_KEY}" | base64 -d > /tmp/sftp_private_key
+  chmod 600 /tmp/sftp_private_key
+fi
 
 printf "Dumping the database..."
 eval "${DUMP_CMD}"
@@ -93,4 +116,8 @@ if [[ -n "${WEBGAZER_HEARTBEAT_URL}" ]]; then
   printf "Sending heartbeat to WebGazer..."
   curl "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS}"
   printf " Done.\n"
+fi
+
+if [[ "${DESTINATION_KIND}" == "sftp" && -n "${SFTP_PRIVATE_KEY}" ]]; then
+  rm -f /tmp/sftp_private_key
 fi

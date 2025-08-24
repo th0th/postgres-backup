@@ -32,12 +32,15 @@
 
 #### SFTP-specific variables (required when DESTINATION_KIND=sftp)
 
-| Variable               | Required | Default value | Description                                                                                                                   |
-|------------------------|:--------:|---------------|-------------------------------------------------------------------------------------------------------------------------------|
-| SFTP_HOST              |    ✔     |               | SFTP server hostname                                                                                                          |
-| SFTP_PASSWORD          |    ✔     |               | SFTP server password                                                                                                          |
-| SFTP_USER              |    ✔     |               | SFTP server username                                                                                                          |
-| SFTP_PORT              |          | 22            | SFTP server port                                                                                                              |
+| Variable         | Required | Default value | Description                                                                         |
+|------------------|:--------:|---------------|-------------------------------------------------------------------------------------|
+| SFTP_HOST        |    ✔     |               | SFTP server hostname                                                                |
+| SFTP_USER        |    ✔     |               | SFTP server username                                                                |
+| SFTP_PORT        |          | 22            | SFTP server port                                                                    |
+| SFTP_PASSWORD    |    ⚠️    |               | SFTP server password (either this OR SFTP_PRIVATE_KEY must be set)                  |
+| SFTP_PRIVATE_KEY |    ⚠️    |               | SFTP private key content (base64 encoded, either this OR SFTP_PASSWORD must be set) |
+
+**Note:** For SFTP authentication, you must provide either `SFTP_PASSWORD` or `SFTP_PRIVATE_KEY`, but not both. The private key will be temporarily stored in the container and automatically cleaned up after use. The `SFTP_PRIVATE_KEY` should be base64 encoded to avoid issues with special characters and newlines in environment variables. Passwords are automatically obscured using rclone's built-in `obscure` command for compatibility with rclone's SFTP backend.
 
 ### Running
 
@@ -63,12 +66,32 @@ $ docker run \
 
 #### SFTP Backup Example
 
+**Using password authentication:**
 ```shell
 $ docker run \
   -e DESTINATION_KIND=sftp \
   -e DESTINATION_PATH=/backups \
   -e SFTP_HOST=<sftp_host> \
   -e SFTP_PASSWORD=<sftp_password> \
+  -e SFTP_USER=<sftp_user> \
+  -e SFTP_PORT=<sftp_port[22]> \
+  -e POSTGRES_DB=<database> \
+  -e POSTGRES_HOST=<postgres_hostname[postgres]> \
+  -e POSTGRES_PASSWORD=<postgres_password> \
+  -e POSTGRES_PORT=<postgres_port[5432]> \
+  -e POSTGRES_USER=<postgres_user[postgres]> \
+  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
+  th0th/postgres-backup
+```
+
+**Using private key authentication:**
+```shell
+$ docker run \
+  -e DESTINATION_KIND=sftp \
+  -e DESTINATION_PATH=/backups \
+  -e SFTP_HOST=<sftp_host> \
+  -e SFTP_PRIVATE_KEY="$(cat ~/.ssh/id_rsa | base64)" \
   -e SFTP_USER=<sftp_user> \
   -e SFTP_PORT=<sftp_port[22]> \
   -e POSTGRES_DB=<database> \
@@ -106,4 +129,4 @@ compliance.
 
 ## License
 
-Copyright © 2022, Gokhan Sari. Released under the [MIT License](LICENSE).
+Copyright © 2025, Gokhan Sari. Released under the [GPL License](LICENSE).
