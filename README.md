@@ -17,7 +17,7 @@
 | POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                      |
 | POSTGRES_PORT          |          | 5432          | Postgres server port                                                                          |
 | POSTGRES_USER          |          | postgres      | Postgres server user                                                                          |
-| POSTGRES_VERSION       |          | 17            | Postgres server version (15, 16 or 17)                                                        |
+| POSTGRES_VERSION       |          | 18            | Postgres server version (15, 16, 17 or 18)                                                    |
 | WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL        |
 
 #### S3-specific variables (required when DESTINATION_KIND=s3)
@@ -59,7 +59,7 @@ $ docker run \
   -e POSTGRES_PASSWORD=<postgres_password> \
   -e POSTGRES_PORT=<postgres_port[5432]> \
   -e POSTGRES_USER=<postgres_user[postgres]> \
-  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
   th0th/postgres-backup
 ```
@@ -80,7 +80,7 @@ $ docker run \
   -e POSTGRES_PASSWORD=<postgres_password> \
   -e POSTGRES_PORT=<postgres_port[5432]> \
   -e POSTGRES_USER=<postgres_user[postgres]> \
-  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
   th0th/postgres-backup
 ```
@@ -99,7 +99,7 @@ $ docker run \
   -e POSTGRES_PASSWORD=<postgres_password> \
   -e POSTGRES_PORT=<postgres_port[5432]> \
   -e POSTGRES_USER=<postgres_user[postgres]> \
-  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
   th0th/postgres-backup
 ```
