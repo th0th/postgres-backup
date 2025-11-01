@@ -61,7 +61,7 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[17]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  th0th/postgres-backup
+  code.unius.sh/unius/postgres-backup
 ```
 
 #### SFTP Backup Example
@@ -82,7 +82,7 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[17]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  th0th/postgres-backup
+  code.unius.sh/unius/postgres-backup
 ```
 
 **Using private key authentication:**
@@ -101,7 +101,7 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[17]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  th0th/postgres-backup
+  code.unius.sh/unius/postgres-backup
 ```
 
 ## Shameless plug
