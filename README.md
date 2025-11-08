@@ -17,7 +17,7 @@
 | POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                      |
 | POSTGRES_PORT          |          | 5432          | Postgres server port                                                                          |
 | POSTGRES_USER          |          | postgres      | Postgres server user                                                                          |
-| POSTGRES_VERSION       |          | 17            | Postgres server version (15, 16 or 17)                                                        |
+| POSTGRES_VERSION       |          | 18            | Postgres server version (15, 16, 17 or 18)                                                    |
 | WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL        |
 
 #### S3-specific variables (required when DESTINATION_KIND=s3)
@@ -37,8 +37,8 @@
 | SFTP_HOST        |    ✔     |               | SFTP server hostname                                                                |
 | SFTP_USER        |    ✔     |               | SFTP server username                                                                |
 | SFTP_PORT        |          | 22            | SFTP server port                                                                    |
-| SFTP_PASSWORD    |    ⚠️    |               | SFTP server password (either this OR SFTP_PRIVATE_KEY must be set)                  |
-| SFTP_PRIVATE_KEY |    ⚠️    |               | SFTP private key content (base64 encoded, either this OR SFTP_PASSWORD must be set) |
+| SFTP_PASSWORD    |    ⚠️    |               | SFTP server password (either this or SFTP_PRIVATE_KEY must be set)                  |
+| SFTP_PRIVATE_KEY |    ⚠️    |               | SFTP private key content (base64 encoded, either this or SFTP_PASSWORD must be set) |
 
 **Note:** For SFTP authentication, you must provide either `SFTP_PASSWORD` or `SFTP_PRIVATE_KEY`, but not both. The private key will be temporarily stored in the container and automatically cleaned up after use. The `SFTP_PRIVATE_KEY` should be base64 encoded to avoid issues with special characters and newlines in environment variables. Passwords are automatically obscured using rclone's built-in `obscure` command for compatibility with rclone's SFTP backend.
 
@@ -59,7 +59,7 @@ $ docker run \
   -e POSTGRES_PASSWORD=<postgres_password> \
   -e POSTGRES_PORT=<postgres_port[5432]> \
   -e POSTGRES_USER=<postgres_user[postgres]> \
-  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
   code.unius.sh/unius/postgres-backup
 ```
@@ -80,7 +80,7 @@ $ docker run \
   -e POSTGRES_PASSWORD=<postgres_password> \
   -e POSTGRES_PORT=<postgres_port[5432]> \
   -e POSTGRES_USER=<postgres_user[postgres]> \
-  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
   code.unius.sh/unius/postgres-backup
 ```
@@ -99,7 +99,7 @@ $ docker run \
   -e POSTGRES_PASSWORD=<postgres_password> \
   -e POSTGRES_PORT=<postgres_port[5432]> \
   -e POSTGRES_USER=<postgres_user[postgres]> \
-  -e POSTGRES_VERSION=<postgres_version[17]> \
+  -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
   code.unius.sh/unius/postgres-backup
 ```
