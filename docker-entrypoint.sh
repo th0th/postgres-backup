@@ -51,7 +51,7 @@ if [[ "${DESTINATION_KIND}" == "sftp" ]]; then
 fi
 
 # logic starts here
-BACKUP_FILE_NAME=$(date +"${POSTGRES_DB}-%F_%T.sql")
+BACKUP_FILE_NAME=$(date +"${POSTGRES_DB}-%F-%H_%M_%S.sql")
 
 # dump command
 DUMP_CMD=""
