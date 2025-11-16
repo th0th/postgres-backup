@@ -67,7 +67,7 @@ DUMP_CMD+="--port=\"${POSTGRES_PORT}\" "
 DUMP_CMD+="--username=\"${POSTGRES_USER}\" "
 
 # upload command
-UPLOAD_CMD="rclone copyto --config --quiet \"\" "
+UPLOAD_CMD="rclone copyto --config \"\" "
 if [[ "${DESTINATION_KIND}" == "s3" ]]; then
   UPLOAD_CMD+="--s3-no-check-bucket "
 fi
@@ -93,7 +93,8 @@ elif [[ "${DESTINATION_KIND}" == "sftp" ]]; then
   UPLOAD_CMD+="user=${SFTP_USER}"
   UPLOAD_CMD+=":${DESTINATION_PATH}/${BACKUP_FILE_NAME}"
 fi
-UPLOAD_CMD+="\""
+UPLOAD_CMD+="\" "
+UPLOAD_CMD+="--quiet"
 
 # let's go
 SECONDS=0
