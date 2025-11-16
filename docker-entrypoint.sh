@@ -115,7 +115,7 @@ printf " Done.\n"
 
 if [[ -n "${WEBGAZER_HEARTBEAT_URL}" ]]; then
   printf "Sending heartbeat to WebGazer..."
-  curl -sS "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS}"
+  curl -Ssf -o /dev/null "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS}"
   printf " Done.\n"
 fi
 
