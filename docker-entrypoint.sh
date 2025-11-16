@@ -93,7 +93,8 @@ elif [[ "${DESTINATION_KIND}" == "sftp" ]]; then
   UPLOAD_CMD+="user=${SFTP_USER}"
   UPLOAD_CMD+=":${DESTINATION_PATH}/${BACKUP_FILE_NAME}"
 fi
-UPLOAD_CMD+="\""
+UPLOAD_CMD+="\" "
+UPLOAD_CMD+="--quiet"
 
 # let's go
 SECONDS=0
@@ -114,7 +115,7 @@ printf " Done.\n"
 
 if [[ -n "${WEBGAZER_HEARTBEAT_URL}" ]]; then
   printf "Sending heartbeat to WebGazer..."
-  curl "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS}"
+  curl -Ssf -o /dev/null "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS}"
   printf " Done.\n"
 fi
 
