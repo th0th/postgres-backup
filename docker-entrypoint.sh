@@ -67,7 +67,7 @@ DUMP_CMD+="--port=\"${POSTGRES_PORT}\" "
 DUMP_CMD+="--username=\"${POSTGRES_USER}\" "
 
 # upload command
-UPLOAD_CMD="rclone copyto --config \"\" "
+UPLOAD_CMD="rclone copyto --config --quiet \"\" "
 if [[ "${DESTINATION_KIND}" == "s3" ]]; then
   UPLOAD_CMD+="--s3-no-check-bucket "
 fi
