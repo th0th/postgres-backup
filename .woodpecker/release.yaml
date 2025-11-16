@@ -1,17 +1,17 @@
+variables:
+  HETZNER_ACCESS_KEY:
+    from_secret: HETZNER_ACCESS_KEY
+  HETZNER_SECRET_KEY:
+    from_secret: HETZNER_SECRET_KEY
+  HETZNER_OBJECT_STORAGE_ENDPOINT_URL:
+    from_secret: HETZNER_OBJECT_STORAGE_ENDPOINT_URL
 steps:
   - image: woodpeckerci/plugin-docker-buildx
     name: build-and-push
-    environment:
-      HETZNER_ACCESS_KEY:
-        from_secret: HETZNER_ACCESS_KEY
-      HETZNER_SECRET_KEY:
-        from_secret: HETZNER_SECRET_KEY
-      HETZNER_OBJECT_STORAGE_ENDPOINT_URL:
-        from_secret: HETZNER_OBJECT_STORAGE_ENDPOINT_URL
     settings:
       auto_tag: true
-      cache_from: "access_key_id=$${HETZNER_ACCESS_KEY},bucket=unius-cache,endpoint_url=$${HETZNER_OBJECT_STORAGE_ENDPOINT_URL},region=nbg1,secret_access_key=$${HETZNER_SECRET_KEY},type=s3"
-      cache_to: "access_key_id=$${HETZNER_ACCESS_KEY},bucket=unius-cache,endpoint_url=$${HETZNER_OBJECT_STORAGE_ENDPOINT_URL},mode=max,region=nbg1,secret_access_key=$${HETZNER_SECRET_KEY},type=s3"
+      cache_from: "access_key_id=${HETZNER_ACCESS_KEY},bucket=unius-cache,endpoint_url=${HETZNER_OBJECT_STORAGE_ENDPOINT_URL},region=nbg1,secret_access_key=${HETZNER_SECRET_KEY},type=s3"
+      cache_to: "access_key_id=${HETZNER_ACCESS_KEY},bucket=unius-cache,endpoint_url=${HETZNER_OBJECT_STORAGE_ENDPOINT_URL},mode=max,region=nbg1,secret_access_key=${HETZNER_SECRET_KEY},type=s3"
       password:
         from_secret: FORGEJO_TOKEN
       platforms: linux/amd64,linux/arm64
