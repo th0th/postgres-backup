@@ -28,6 +28,7 @@
 | S3_REGION              |    ✔     |               | Region for the S3 bucket                                                                                                      |
 | S3_SECRET_ACCESS_KEY   |    ✔     |               | Secret access key for the S3-compatible storage                                                                               |
 | S3_PROVIDER            |          | AWS           | S3 provider (AWS, MinIO, etc.)                                                                                                |
+| S3_ENDPOINT            |          |               | Endpoint URL for the S3-compatible storage                                                                                     |
 | S3_STORAGE_CLASS       |          | STANDARD_IA   | S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options)     |
 
 #### SFTP-specific variables (required when DESTINATION_KIND=sftp)
