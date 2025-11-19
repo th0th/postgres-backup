@@ -79,6 +79,9 @@ if [[ "${DESTINATION_KIND}" == "s3" ]]; then
   UPLOAD_CMD+="region=${S3_REGION},"
   UPLOAD_CMD+="secret_access_key=${S3_SECRET_ACCESS_KEY},"
   UPLOAD_CMD+="storage_class=${S3_STORAGE_CLASS}"
+  if [[ -n "${S3_ENDPOINT}" ]]; then
+    UPLOAD_CMD+=",endpoint=${S3_ENDPOINT}"
+  fi
   UPLOAD_CMD+=":${DESTINATION_PATH}/${BACKUP_FILE_NAME}"
 elif [[ "${DESTINATION_KIND}" == "sftp" ]]; then
   UPLOAD_CMD+=":sftp,host=${SFTP_HOST},"
