@@ -22,14 +22,14 @@
 
 #### S3-specific variables (required when DESTINATION_KIND=s3)
 
-| Variable               | Required | Default value | Description                                                                                                                   |
-|------------------------|:--------:|---------------|-------------------------------------------------------------------------------------------------------------------------------|
-| S3_ACCESS_KEY_ID       |    ✔     |               | Access key id for the S3-compatible storage                                                                                   |
-| S3_REGION              |    ✔     |               | Region for the S3 bucket                                                                                                      |
-| S3_SECRET_ACCESS_KEY   |    ✔     |               | Secret access key for the S3-compatible storage                                                                               |
-| S3_PROVIDER            |          | AWS           | S3 provider (AWS, MinIO, etc.)                                                                                                |
-| S3_ENDPOINT            |          |               | Endpoint URL for the S3-compatible storage                                                                                     |
-| S3_STORAGE_CLASS       |          | STANDARD_IA   | S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options)     |
+| Variable             | Required | Default value | Description                                                                                                               |
+|----------------------|:--------:|---------------|---------------------------------------------------------------------------------------------------------------------------|
+| S3_ACCESS_KEY_ID     |    ✔     |               | Access key id for the S3-compatible storage                                                                               |
+| S3_REGION            |    ✔     |               | Region for the S3 bucket                                                                                                  |
+| S3_SECRET_ACCESS_KEY |    ✔     |               | Secret access key for the S3-compatible storage                                                                           |
+| S3_PROVIDER          |          | AWS           | S3 provider (AWS, MinIO, etc.)                                                                                            |
+| S3_ENDPOINT          |          |               | Endpoint URL for the S3-compatible storage                                                                                |
+| S3_STORAGE_CLASS     |          | STANDARD_IA   | S3 storage class (see https://aws.amazon.com/s3/storage-classes/ and https://rclone.org/s3/#s3-storage-class for options) |
 
 #### SFTP-specific variables (required when DESTINATION_KIND=sftp)
 
@@ -45,7 +45,7 @@
 
 ### Running
 
-#### S3 Backup Example
+#### S3 backup example
 
 ```shell
 $ docker run \
@@ -62,12 +62,13 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  code.unius.sh/unius/postgres-backup
+  code.unius.sh/unius/postgres-backup:1.0.4
 ```
 
-#### SFTP Backup Example
+#### SFTP backup example
 
 **Using password authentication:**
+
 ```shell
 $ docker run \
   -e DESTINATION_KIND=sftp \
@@ -83,10 +84,11 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  code.unius.sh/unius/postgres-backup
+  code.unius.sh/unius/postgres-backup:1.0.4
 ```
 
 **Using private key authentication:**
+
 ```shell
 $ docker run \
   -e DESTINATION_KIND=sftp \
@@ -102,7 +104,7 @@ $ docker run \
   -e POSTGRES_USER=<postgres_user[postgres]> \
   -e POSTGRES_VERSION=<postgres_version[18]> \
   -e WEBGAZER_HEARTBEAT_URL=<webgazer_heartbeat_url> \
-  code.unius.sh/unius/postgres-backup
+  code.unius.sh/unius/postgres-backup:1.0.4
 ```
 
 ## Shameless plug
