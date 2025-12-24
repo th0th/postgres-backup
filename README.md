@@ -17,7 +17,7 @@
 | POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                      |
 | POSTGRES_PORT          |          | 5432          | Postgres server port                                                                          |
 | POSTGRES_USER          |          | postgres      | Postgres server user                                                                          |
-| POSTGRES_VERSION       |          | 18            | Postgres server version (15, 16, 17 or 18)                                                    |
+| POSTGRES_VERSION       |          | 18            | Postgres server version (16, 17 or 18).                                                       |
 | WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL        |
 
 #### S3-specific variables (required when DESTINATION_KIND=s3)
