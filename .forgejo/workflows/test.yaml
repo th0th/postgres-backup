@@ -1,0 +1,30 @@
+jobs:
+  test-build:
+    name: Test build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+
+      - name: Set up docker buildx
+        uses: actions/docker-setup-buildx-action@v3.11.1
+        with:
+          endpoint: tcp://docker:2375
+
+      - name: Build container image
+        uses: actions/docker-build-push-action@v6.18.0
+        with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: false
+          tags: test:latest
+name: Test
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - edited
+      - opened
+      - reopened
+      - synchronize

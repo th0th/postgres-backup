@@ -1,0 +1,41 @@
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+
+      - name: Log in to the container registry
+        uses: actions/docker-login-action@v3.6.0
+        with:
+          registry: ${{ vars.CONTAINER_REGISTRY }}
+          username: ${{ secrets.FORGEJO_RUNNER_USER }}
+          password: ${{ secrets.FORGEJO_RUNNER_TOKEN }}
+
+      - name: Set up docker buildx
+        uses: actions/docker-setup-buildx-action@v3.11.1
+        with:
+          endpoint: tcp://docker:2375
+
+      - name: Extract metadata for docker
+        id: meta
+        uses: actions/docker-metadata-action@v5.10.0
+        with:
+          images: ${{ vars.CONTAINER_REGISTRY }}/${{ forgejo.repository }}
+          tags: type=semver,pattern={{version}}
+
+      - name: Build and push docker image
+        uses: actions/docker-build-push-action@v6.18.0
+        with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+name: Release
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+      - v[0-9]+.[0-9]+.[0-9]+-*
