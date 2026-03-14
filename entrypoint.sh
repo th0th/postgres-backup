@@ -124,7 +124,7 @@ if [[ -n "${WEBGAZER_HEARTBEAT_URL}" ]]; then
   printf " Done.\n"
 fi
 
-if [[ -n "${GATUS_EXTERNAL_ENDPOINT_URL}" && -n "${GATUS_EXTERNAL_ENDPOINT_TOKEN}" ]]; then
+if [[ -n "${GATUS_EXTERNAL_ENDPOINT_TOKEN}" && -n "${GATUS_EXTERNAL_ENDPOINT_URL}" ]]; then
   printf "Sending heartbeat to Gatus..."
   curl \
     -X POST \
