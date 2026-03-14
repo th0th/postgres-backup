@@ -3,22 +3,25 @@
 * Takes the dump of the Postgres database
 * Uploads it to either AWS S3 or SFTP server
 * Reports to [WebGazer](https://www.webgazer.io) (optional)
+* Reports to [Gatus](https://github.com/TwiN/gatus) (optional)
 
 ## Usage
 
 ### Environment variables
 
-| Variable               | Required | Default value | Description                                                                                   |
-|------------------------|:--------:|---------------|-----------------------------------------------------------------------------------------------|
-| DESTINATION_KIND       |    ✔     |               | Destination type: `s3` or `sftp`                                                              |
-| DESTINATION_PATH       |    ✔     |               | Destination path (e.g. "postgres-backup" for S3 bucket path or "/backups" for SFTP directory) |
-| POSTGRES_DB            |    ✔     |               | Postgres server database                                                                      |
-| POSTGRES_HOST          |          | postgres      | Postgres server host                                                                          |
-| POSTGRES_PASSWORD      |    ✔     |               | Postgres server password                                                                      |
-| POSTGRES_PORT          |          | 5432          | Postgres server port                                                                          |
-| POSTGRES_USER          |          | postgres      | Postgres server user                                                                          |
-| POSTGRES_VERSION       |          | 18            | Postgres server version (16, 17 or 18).                                                       |
-| WEBGAZER_HEARTBEAT_URL |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL        |
+| Variable                      | Required | Default value | Description                                                                                   |
+|-------------------------------|:--------:|---------------|-----------------------------------------------------------------------------------------------|
+| DESTINATION_KIND              |    ✔     |               | Destination type: `s3` or `sftp`                                                              |
+| DESTINATION_PATH              |    ✔     |               | Destination path (e.g. "postgres-backup" for S3 bucket path or "/backups" for SFTP directory) |
+| POSTGRES_DB                   |    ✔     |               | Postgres server database                                                                      |
+| POSTGRES_HOST                 |          | postgres      | Postgres server host                                                                          |
+| POSTGRES_PASSWORD             |    ✔     |               | Postgres server password                                                                      |
+| POSTGRES_PORT                 |          | 5432          | Postgres server port                                                                          |
+| POSTGRES_USER                 |          | postgres      | Postgres server user                                                                          |
+| POSTGRES_VERSION              |          | 18            | Postgres server version (16, 17 or 18).                                                       |
+| WEBGAZER_HEARTBEAT_URL        |          |               | [WebGazer Heartbeat Monitor](https://www.webgazer.io/services/cron-job-monitoring) URL        |
+| GATUS_EXTERNAL_ENDPOINT_URL   |          |               | [Gatus](https://github.com/TwiN/gatus) external endpoint URL                                  |
+| GATUS_EXTERNAL_ENDPOINT_TOKEN |          |               | Bearer token for Gatus external endpoint authentication                                       |
 
 #### S3-specific variables (required when DESTINATION_KIND=s3)
 

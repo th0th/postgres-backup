@@ -116,9 +116,20 @@ printf "Uploading..."
 eval "${UPLOAD_CMD}"
 printf " Done.\n"
 
+SECONDS_ON_COMPLETE="${SECONDS}"
+
 if [[ -n "${WEBGAZER_HEARTBEAT_URL}" ]]; then
   printf "Sending heartbeat to WebGazer..."
-  curl -Ssf -o /dev/null "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS}"
+  curl -Ssf -o /dev/null "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS_ON_COMPLETE}"
+  printf " Done.\n"
+fi
+
+if [[ -n "${GATUS_EXTERNAL_ENDPOINT_URL}" && -n "${GATUS_EXTERNAL_ENDPOINT_TOKEN}" ]]; then
+  printf "Sending heartbeat to Gatus..."
+  curl \
+    -X POST \
+    -H "Authorization: Bearer ${GATUS_EXTERNAL_ENDPOINT_TOKEN}" \
+    "${GATUS_EXTERNAL_ENDPOINT_URL}?success=true&duration=${SECONDS_ON_COMPLETE}s"
   printf " Done.\n"
 fi
 
