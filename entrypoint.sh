@@ -118,6 +118,8 @@ printf " Done.\n"
 
 SECONDS_ON_COMPLETE="${SECONDS}"
 
+rm -r "${BACKUP_FILE_NAME}"
+
 if [[ -n "${WEBGAZER_HEARTBEAT_URL}" ]]; then
   printf "Sending heartbeat to WebGazer..."
   curl -Ssf -o /dev/null "${WEBGAZER_HEARTBEAT_URL}?seconds=${SECONDS_ON_COMPLETE}"
